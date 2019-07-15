@@ -6,3 +6,5 @@ node_modules/
 public/
 .deploy*/
 .travis/id_rsa_travis
+yuque.json
+source/_posts/yuque/*
