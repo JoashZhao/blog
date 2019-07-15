@@ -8,7 +8,7 @@ cache:
   directories:
     - node_modules
 before_install:
-  - openssl aes-256-cbc -k "$super_secret_password" -in .travis/id_rsa_travis.enc -out ~/.ssh/id_rsa_travis -d
+  - openssl enc -aes-256-cbc -k "$super_secret_password" -md sha512 -pbkdf2 -iter 1000 -salt -in .\.travis\id_rsa_travis.enc -out ~/.ssh/id_rsa_travis -d
   - chmod 600 ~/.ssh/id_rsa_travis
   - eval $(ssh-agent)
   - ssh-add ~/.ssh/id_rsa_travis
