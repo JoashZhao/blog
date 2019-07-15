@@ -8,7 +8,6 @@ cache:
   directories:
     - node_modules
 before_install:
-  - sudo apt-get install openssl=1.1.1
   - openssl enc -aes-256-cbc -k "$super_secret_password" -md sha512 -iter 1000 -salt -in .\.travis\id_rsa_travis.enc -out ~/.ssh/id_rsa_travis -d
   - chmod 600 ~/.ssh/id_rsa_travis
   - eval $(ssh-agent)
