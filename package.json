@@ -15,7 +15,8 @@
     "hexo-renderer-ejs": "^0.3.1",
     "hexo-renderer-marked": "^1.0.1",
     "hexo-renderer-stylus": "^0.3.3",
-    "hexo-server": "^0.3.3"
+    "hexo-server": "^0.3.3",
+    "yuque-hexo": "^1.6.1"
   },
   "yuqueConfig": {
     "postPath": "source/_posts/yuque",
