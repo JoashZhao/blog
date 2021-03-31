@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Joash&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Joash&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/blog/index.html">
+<meta property="og:site_name" content="Joash&#39;s Blog">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Joash&#39;s Blog">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Joash&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Joash&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-yuque/语雀自动同步HEXO机器人——搭建细节" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/07/16/yuque/语雀自动同步HEXO机器人——搭建细节/" class="article-date">
+  <time datetime="2019-07-16T08:18:37.000Z" itemprop="datePublished">2019-07-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/07/16/yuque/语雀自动同步HEXO机器人——搭建细节/">语雀自动同步HEXO机器人——搭建细节</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Challenge Accepted!</strong></p>
+<p><a name="9AgHu"></a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>语雀作为专业云端知识库，并且提供了优秀的富文本编辑器，支持在线编辑与版本控制等功能，对于个人来讲适合记录笔记以及写文章。本文的目的在于提供简单的从语雀到个人博客（HEXO）的同步机器人流程搭建细节，使得<strong>快速实现语雀作为文本编辑载体，同步个人博客至HEXO的功能</strong>。</p>
+<p><a name="TWelt"></a></p>
+<h2 id="流程介绍"><a href="#流程介绍" class="headerlink" title="流程介绍"></a>流程介绍</h2><p>与网上一些经验类似，搭建完成后的同步机器人分成图中四个步骤执行，在语雀更新后个人博客主页全自动同步。<br>接下来将倒着从最后往前逐一介绍。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/411705/1563345082916-4a473556-98ba-4c22-b407-1fc0fa58b787.png" alt></p>
+<p><a name="EKOur"></a></p>
+<h2 id="HEXO"><a href="#HEXO" class="headerlink" title="HEXO"></a>HEXO</h2><p><a href="https://hexo.io/zh-cn/index.html" target="_blank" rel="noopener">Hexo</a>是一个博客框架，支持专注于.md格式的内容编辑后快速生成静态博客页面。<br>github提供托管生成的静态页面的功能，所以一个快速搭建的博客只需要进行接下来的几个步骤。</p>
+<ol>
+<li><p>安装hexo脚手架初始化项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line"><span class="built_in">cd</span> ~/your/blog/dir</span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>本地编辑博客</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo n &lt;title&gt; <span class="comment"># 创建名为title的.md，可进行编辑</span></span><br><span class="line">hexo s <span class="comment"># 本地启动服务查看最终页面</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>部署博客（无git配置下只生成静态文件）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d <span class="comment"># 部署博客</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>部署博客到github</p>
+</li>
+</ol>
+<p>只需要配置项目根目录的 <code>_config.yml</code> 最后几行，格式如下</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:JoashZhao/blog.git</span> <span class="comment"># 你的git项目地址，也支持https</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">gh-pages</span></span><br></pre></td></tr></table></figure>
+
+<p>注意到branch这里我填写 <code>gh-pages</code> ，github支持几种托管的方式（详见Repository的Setting），另一种方案可以新建 <code>&lt;nickname&gt;.github.io</code> 的Repository并填写master分支。放在<code>gh-pages</code>分支我是为了把该hexo项目和最后生成的博客静态文件放在一个Repository中。配置完成之后，步骤3的 <code>hexo d</code> 命令将会生成静态文件并push到配好的Repository的分支中。<br>例如我这里放在blog的gh-pages分支，可以访问<a href="https://joashzhao.github.io/blog/" target="_blank" rel="noopener">https://joashzhao.github.io/blog/</a>访问我的博客主页（若不想在/blog/下访问可以用上述的另一种方法）。</p>
+<p><a name="GtKlB"></a></p>
+<h2 id="Travis"><a href="#Travis" class="headerlink" title="Travis"></a>Travis</h2><p><a href="https://travis-ci.com/" target="_blank" rel="noopener">Travis</a>是一个提供github项目的CI持续集成的免费平台。github项目关联Travis后有两种食用方式，一是新的commit会触发Travis的CI，进行项目的编译部署等（如本文中的博客文件生成和部署），二是可以通过developer api的方式触发Travis的CI流程。</p>
+<p>在Travis关联github的项目之后，无论那种方式想要触发CI，项目都需要有一个根目录的配置文件 <code>.travis.yml</code> ，新的commit或者developer api都会让Travis按照这个 <code>.yml</code> 的<a href="https://docs.travis-ci.com/user/tutorial/" target="_blank" rel="noopener">配置</a>进行持续集成。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">node_js</span></span><br><span class="line"><span class="attr">node_js:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="number">12.6</span><span class="number">.0</span></span><br><span class="line"><span class="attr">branches:</span></span><br><span class="line">  <span class="attr">only:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line"><span class="attr">cache:</span></span><br><span class="line">  <span class="attr">directories:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">node_modules</span></span><br><span class="line"><span class="attr">before_install:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">openssl</span> <span class="string">enc</span> <span class="string">-aes-256-cbc</span> <span class="string">-k</span> <span class="string">"$super_secret_password"</span> <span class="string">-md</span> <span class="string">sha512</span> <span class="string">-salt</span> <span class="string">-in</span> <span class="string">./.travis/id_rsa_travis.enc</span> <span class="string">-out</span> <span class="string">~/.ssh/id_rsa_travis</span> <span class="string">-d</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">chmod</span> <span class="number">600</span> <span class="string">~/.ssh/id_rsa_travis</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">eval</span> <span class="string">$(ssh-agent)</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ssh-add</span> <span class="string">~/.ssh/id_rsa_travis</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">cp</span> <span class="string">./.travis/ssh_config</span> <span class="string">~/.ssh/config</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">config</span> <span class="string">--global</span> <span class="string">user.name</span> <span class="string">JoashZhao</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">git</span> <span class="string">config</span> <span class="string">--global</span> <span class="string">user.email</span> <span class="number">1143768516</span><span class="string">@qq.com</span></span><br><span class="line"><span class="attr">install:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span> <span class="string">hexo-cli</span> <span class="string">-g</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo</span> <span class="string">d</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1-6行是持续集成的nodejs环境，选择适合的版本和项目触发构建的分支。</li>
+<li>7-9行是缓存node_modules加快安装模块速度。</li>
+<li>10-17是部署之前的秘钥设置，因为Travis对github项目的部署得有写的权限，事先<a href="https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent" target="_blank" rel="noopener">生成一对公私秘钥</a>，公钥放在github项目的 <code>Setting/Deploy Keys</code> 中，私钥放在CI的运行环境中，这样CI才能对github的项目执行deploy的写操作。以防私钥泄露，通过11行的openssl解密的方式把预先加密过的私钥 <code>./.travis/id_rsa_travis.enc</code> 解密成 <code>~/.ssh/id_rsa_travis</code> ，CI在部署的时候用解密之后的文件对github项目进行写操作。其中 <code>$super_secret_password</code> 为一个环境变量，可以在Travis的setting页面设置，如下图。( <code>$yuque_token</code> 下节会用到)</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/411705/1563280603897-2139452a-eed7-4e3b-b2f9-2c4e98b18a93.png#align=left&display=inline&height=181&name=Screenshot%20from%202019-07-16%2020-36-00.png&originHeight=181&originWidth=1123&size=15790&status=done&width=1123" alt="Screenshot from 2019-07-16 20-36-00.png"></p>
+<ul>
+<li>而预先加密的命令类似 <code>openssl enc -aes-256-cbc -k &lt;your_super_secret_password&gt; -md sha512 -salt -in ./.travis/id_rsa_travis -out ~/.ssh/id_rsa_travis.enc</code> ，注意不要把私钥<code>id_rsa_travis</code>直接commit进项目中即可防止泄露。</li>
+<li>18-20行安装对应的模块。</li>
+<li>22行通过<code>hexo d</code>部署。</li>
+</ul>
+<p>至此，通过该yml文件，Travis可以生成和部署博客内容，我们只需要commit到master分支即可。</p>
+<p><a name="TooMJ"></a></p>
+<h2 id="Yuque-Hexo"><a href="#Yuque-Hexo" class="headerlink" title="Yuque-Hexo"></a>Yuque-Hexo</h2><p><a href="https://github.com/x-cold/yuque-hexo" target="_blank" rel="noopener">yuque-hexo</a>是一个同步语雀的文章到hexo的项目，能抓取账号下的语雀文章内容并且类似类似hexo脚手架的方式部署，主要分为三个步骤。</p>
+<ol>
+<li>添加对应模块和脚本package.json</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"cross-env"</span>: <span class="string">"^5.2.0"</span>,</span><br><span class="line">		<span class="attr">"yuque-hexo"</span>: <span class="string">"^1.6.1"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"yuqueConfig"</span>: &#123;</span><br><span class="line">    <span class="attr">"postPath"</span>: <span class="string">"source/_posts/yuque"</span>,</span><br><span class="line">    <span class="attr">"cachePath"</span>: <span class="string">"yuque.json"</span>,</span><br><span class="line">    <span class="attr">"mdNameFormat"</span>: <span class="string">"title"</span>,</span><br><span class="line">    <span class="attr">"adapter"</span>: <span class="string">"hexo"</span>,</span><br><span class="line">    <span class="attr">"concurrency"</span>: <span class="number">5</span>,</span><br><span class="line">    <span class="attr">"baseUrl"</span>: <span class="string">"https://www.yuque.com/api/v2/"</span>,</span><br><span class="line">    <span class="attr">"login"</span>: <span class="string">"joashzhao"</span>,</span><br><span class="line">    <span class="attr">"repo"</span>: <span class="string">"blog"</span>,</span><br><span class="line">    <span class="attr">"onlyPublished"</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"clean"</span>: <span class="string">"hexo clean"</span>,</span><br><span class="line">    <span class="attr">"clean:yuque"</span>: <span class="string">"yuque-hexo clean"</span>,</span><br><span class="line">    <span class="attr">"deploy"</span>: <span class="string">"yuque-hexo sync &amp;&amp; hexo deploy"</span>,</span><br><span class="line">    <span class="attr">"publish"</span>: <span class="string">"npm run clean &amp;&amp; npm run deploy"</span>,</span><br><span class="line">    <span class="attr">"dev"</span>: <span class="string">"hexo s"</span>,</span><br><span class="line">    <span class="attr">"sync"</span>: <span class="string">"yuque-hexo sync"</span>,</span><br><span class="line">    <span class="attr">"reset"</span>: <span class="string">"npm run clean:yuque &amp;&amp; npm run sync"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中yuqueConfig为语雀的文章同步至HEXO的配置，scripts添加的为yuque-hexo的命令行工具，主要用到deploy命令。<br></p>
+<ol start="2">
+<li>设置Token</li>
+</ol>
+<p>yuque-hexo在v1.6.0更新后，需要设置对应的Token才能获取到语雀的文章。<br>首先在<a href="https://www.yuque.com/settings/tokens" target="_blank" rel="noopener">https://www.yuque.com/settings/tokens</a>新建一个token，然后添加到Travis的环境变量中（如前所述），注入构建的脚本，把CI的最后一步改为 :</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">script:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">cross-env</span> <span class="string">YUQUE_TOKEN=$yuque_token</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">deploy</span></span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>cross-env</code> 是为了兼容不同系统设置环境变量。到此，执行 <code>npm run deploy</code> 脚本就可以同步语雀的文章并部署了。<br>目前为止，有了一个半自动的部署流程，在语雀发表文章，手动进入Travis触发构建即可，如果需要全自动的流程，则可以通过下面的方式进行。</p>
+<p><a name="egrli"></a></p>
+<h2 id="语雀Web-Hook"><a href="#语雀Web-Hook" class="headerlink" title="语雀Web Hook"></a>语雀Web Hook</h2><p>语雀的Web Hook可以在文档更新之后触发一个<a href="https://www.yuque.com/yuque/developer/doc-webhook" target="_blank" rel="noopener">http的post请求</a>，前面提到Travis可以通过api的方式触发构建过程，但是这两步骤无法直接连接使用，所以可以启一个代理的服务，Web Hook的请求发送至该服务后，该服务去触发Travis的CI构建。</p>
+<ol>
+<li>使用阿里云的函数计算服务，配置以下的handler</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> https = <span class="built_in">require</span>(<span class="string">'https'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkQueries</span>(<span class="params">queries</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> queries !== <span class="string">'object'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> &#123; branch, token, repos &#125; = queries || &#123;&#125;;</span><br><span class="line">  <span class="keyword">if</span> (!branch || !token || !repos) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports.handler = <span class="function"><span class="keyword">function</span>(<span class="params">req, resp</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> validQueries = checkQueries(req.queries);</span><br><span class="line">  <span class="keyword">if</span> (!validQueries) &#123;</span><br><span class="line">    resp.setStatusCode(<span class="number">400</span>);</span><br><span class="line">    <span class="keyword">return</span> resp.send(<span class="string">'&#123;"success": false&#125;'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> &#123; branch, message = <span class="string">'yuque update'</span>, token, repos &#125; = req.queries;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> payload = <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">    message,</span><br><span class="line">    branch</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">const</span> headers = &#123;</span><br><span class="line">    <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span>,</span><br><span class="line">    <span class="string">'Travis-API-Version'</span>: <span class="string">'3'</span>,</span><br><span class="line">    Authorization: <span class="string">`token <span class="subst">$&#123;token&#125;</span>`</span>,</span><br><span class="line">    <span class="string">'Conent-Length'</span>: Buffer.byteLength(payload)</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">const</span> options = &#123;</span><br><span class="line">    hostname: <span class="string">'api.travis-ci.com'</span>,</span><br><span class="line">    port: <span class="number">443</span>,</span><br><span class="line">    path: <span class="string">`/repo/<span class="subst">$&#123;<span class="built_in">encodeURIComponent</span>(repos)&#125;</span>/requests`</span>,</span><br><span class="line">    method: <span class="string">'POST'</span>,</span><br><span class="line">    headers</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> result = <span class="string">''</span>;</span><br><span class="line">  <span class="keyword">const</span> request = https.request(options, <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">    res.setEncoding(<span class="string">'utf8'</span>);</span><br><span class="line">    res.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123;</span><br><span class="line">      result += chunk;</span><br><span class="line">    &#125;);</span><br><span class="line">    res.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      resp.setStatusCode(<span class="number">200</span>);</span><br><span class="line">      resp.setHeader(<span class="string">'content-type'</span>, <span class="string">'application/json'</span>);</span><br><span class="line">      resp.send(result);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">  request.on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    resp.setStatusCode(<span class="number">500</span>);</span><br><span class="line">    resp.send(<span class="string">'&#123;"success": false&#125;'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">  request.write(payload);</span><br><span class="line">  request.end();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其中22行的branch, message, token, repos为语雀的Web Hook请求可携带的参数，解析出来后，在请求 <code>api.travis-ci.com</code> 的时候注入进去。</li>
+<li>28-40行为满足Travis developer api的<a href="https://developer.travis-ci.com/resource/request#Request" target="_blank" rel="noopener">触发build条件</a>，token可以在Travis<a href="https://travis-ci.com/account/preferences" target="_blank" rel="noopener">这里</a>找到。</li>
+</ul>
+<ol start="2">
+<li>配置语雀Web Hook</li>
+</ol>
+<p>在语雀的Web Hook配置页面填入类似${our_server_url}?branch=master&amp;token=${your_travis_token}&amp;repos=${repo_name}即可。该链接需要与上述的定义的服务匹配。其中 <code>&lt;repo_name&gt;</code> 可以在通过请求<a href="https://developer.travis-ci.com/resource/repositories#Repositories" target="_blank" rel="noopener">对应api</a>找到。<br><br><br><br><br></p>
+<p><a name="a6tsC"></a></p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>至此，语雀同步到HEXO的机器人搭建细节全部结束，当在语雀更新文章后，个人的HEXO博客内容也可以自动更新。同时一些没有在语雀的发布内容也可以通过commit到github的方式触发Travis构建部署。我们只需要专注于内容本身，极大地缩短了构建部署这样繁琐的过程的时间: )</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/blog/2019/07/16/yuque/语雀自动同步HEXO机器人——搭建细节/" data-id="ckmwpaqr90000asq3m0927pls" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2019/07/16/yuque/语雀自动同步HEXO机器人——搭建细节/">语雀自动同步HEXO机器人——搭建细节</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 Joash<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
